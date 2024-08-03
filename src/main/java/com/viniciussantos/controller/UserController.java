@@ -3,31 +3,42 @@ package com.viniciussantos.controller;
 
 import com.viniciussantos.model.User;
 import com.viniciussantos.repository.UserRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
-    private final UserRepository userRepository;
+    @Autowired
+    private  UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
+
+    @PostMapping("api/user")
+    public User createUser(@RequestBody User user) throws Exception {
+       User userExists = userRepository.findByEmail(user.getEmail());
+        if (userExists != null) {
+            throw new Exception("User already exists with email: " + user.getEmail());
+        }
+
         return userRepository.save(user);
     }
 
-    public User findByEmail(String email) throws Exception{
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new Exception("User not found with email: " + email);
-        }
-        return user;
+
+    @DeleteMapping("api/user/{id}")
+    public String deleteUser(@PathVariable Long id) throws Exception {
+         userRepository.deleteById(id);
+        return "User deleted successfully";
 
     }
+
+    @GetMapping("api/user")
+    public List<User> getAllUsers() throws Exception {
+        return userRepository.findAll();
+    }
+
+
 
 
 }
