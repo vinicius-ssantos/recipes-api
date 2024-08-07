@@ -16,7 +16,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JwtProvider jwtProvider;
 
-
     @Override
     public User findUserById(Long id) throws Exception {
         return userRepository.findById(id)
@@ -34,8 +33,5 @@ public class UserServiceImpl implements UserService {
             throw new Exception("User not found with email: " + email);
         }
         return user;
-
     }
-
-
 }
