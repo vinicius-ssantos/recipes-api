@@ -54,7 +54,6 @@ public class RecipeController {
                              @PathVariable Long id) throws Exception {
         User user = userService.findUserByJwt(jwt);
 
-
         Recipe updatedRecipe = recipeService.likeRecipe(id, user);
         return updatedRecipe;
     }

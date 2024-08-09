@@ -17,6 +17,22 @@ services:
     networks:
       - app-network
 
+#  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: spring_boot_app
+#    restart: no
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#    networks:
+#      - app-network
+
+
+
+
 volumes:
   db-data:
 
